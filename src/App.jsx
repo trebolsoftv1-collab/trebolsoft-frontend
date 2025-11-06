@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import useAuthStore from './store/authStore';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ClientList from './pages/clients/ClientList';
 import ClientForm from './pages/clients/ClientForm';
+import UsersList from './pages/users/UsersList';
+import UserForm from './pages/users/UserForm';
 
 function App() {
   const hydrate = useAuthStore((state) => state.hydrate);
@@ -20,11 +22,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Ruta raíz: redirige según autenticación */}
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
             isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
-          } 
+          }
         />
 
         {/* Login */}
@@ -50,9 +52,29 @@ function App() {
           }
         />
 
-        {/* Crear Cliente - Protegido (solo admin y supervisor) */}
+        {/* Crear Cliente - Todos pueden crear */}
         <Route
           path="/clients/new"
+          element={
+            <ProtectedRoute>
+              <ClientForm />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Ver Cliente - Todos pueden ver */}
+        <Route
+          path="/clients/:id"
+          element={
+            <ProtectedRoute>
+              <ClientList />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Editar Cliente - Solo Admin y Supervisor */}
+        <Route
+          path="/clients/:id/edit"
           element={
             <ProtectedRoute allowedRoles={['admin', 'supervisor']}>
               <ClientForm />
@@ -60,12 +82,42 @@ function App() {
           }
         />
 
-        {/* Editar Cliente - Protegido (solo admin y supervisor) */}
+        {/* === RUTAS DE USUARIOS (Solo Admin) === */}
+        {/* Lista de Usuarios - Solo Admin */}
         <Route
-          path="/clients/:id"
+          path="/users"
           element={
-            <ProtectedRoute allowedRoles={['admin', 'supervisor']}>
-              <ClientForm />
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UsersList />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Crear Usuario - Solo Admin */}
+        <Route
+          path="/users/new"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UserForm />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Ver/Editar Usuario - Solo Admin */}
+        <Route
+          path="/users/:id"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UsersList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/users/:id/edit"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UserForm />
             </ProtectedRoute>
           }
         />

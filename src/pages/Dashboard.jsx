@@ -1,4 +1,4 @@
-﻿import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
 
 export default function Dashboard() {
@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   const roleLabels = {
     admin: "Administrador",
-    supervisor: "Supervisor", 
+    supervisor: "Supervisor",
     collector: "Cobrador",
   };
 
@@ -56,7 +56,7 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-600">Total Clientes</p>
                 <p className="text-3xl font-bold text-gray-900 mt-2">--</p>
               </div>
-              <div className="text-primary-600 text-4xl"></div>
+              <div className="text-primary-600 text-4xl">👥</div>
             </div>
           </div>
 
@@ -66,7 +66,7 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-600">Cobranzas Hoy</p>
                 <p className="text-3xl font-bold text-gray-900 mt-2">--</p>
               </div>
-              <div className="text-secondary-600 text-4xl"></div>
+              <div className="text-secondary-600 text-4xl">💰</div>
             </div>
           </div>
 
@@ -76,19 +76,19 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-600">Pendientes</p>
                 <p className="text-3xl font-bold text-gray-900 mt-2">--</p>
               </div>
-              <div className="text-danger-600 text-4xl"></div>
+              <div className="text-danger-600 text-4xl">⏰</div>
             </div>
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Acciones Rápidas</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <button
               onClick={() => navigate("/clients")}
               className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition"
             >
-              <span className="text-3xl"></span>
+              <span className="text-3xl">👥</span>
               <div className="text-left">
                 <p className="font-semibold text-gray-900">Ver Clientes</p>
                 <p className="text-sm text-gray-600">Lista completa</p>
@@ -100,7 +100,7 @@ export default function Dashboard() {
                 onClick={() => navigate("/clients/new")}
                 className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition"
               >
-                <span className="text-3xl"></span>
+                <span className="text-3xl">➕</span>
                 <div className="text-left">
                   <p className="font-semibold text-gray-900">Nuevo Cliente</p>
                   <p className="text-sm text-gray-600">Registrar</p>
@@ -108,8 +108,21 @@ export default function Dashboard() {
               </button>
             )}
 
+            {user?.role === "admin" && (
+              <button
+                onClick={() => navigate("/users")}
+                className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition"
+              >
+                <span className="text-3xl">👤</span>
+                <div className="text-left">
+                  <p className="font-semibold text-gray-900">Gestionar Usuarios</p>
+                  <p className="text-sm text-gray-600">Supervisores y Cobradores</p>
+                </div>
+              </button>
+            )}
+
             <button className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition">
-              <span className="text-3xl"></span>
+              <span className="text-3xl">📊</span>
               <div className="text-left">
                 <p className="font-semibold text-gray-900">Reportes</p>
                 <p className="text-sm text-gray-600">Ver estadísticas</p>
@@ -123,19 +136,38 @@ export default function Dashboard() {
             Panel de {roleLabels[user?.role]}
           </h3>
           {user?.role === "admin" && (
-            <p className="text-gray-600">
-              Como administrador tienes acceso completo al sistema: gestión de clientes, usuarios, reportes y configuración.
-            </p>
+            <div className="text-gray-600">
+              <p className="mb-2">Como administrador tienes acceso completo al sistema:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm">
+                <li>✅ Gestión completa de usuarios (crear supervisores y cobradores)</li>
+                <li>✅ Gestión de clientes y asignación por zonas</li>
+                <li>✅ Reportes y estadísticas generales</li>
+                <li>✅ Configuración del sistema</li>
+                <li>✅ Ver toda la información sin restricciones</li>
+              </ul>
+            </div>
           )}
           {user?.role === "supervisor" && (
-            <p className="text-gray-600">
-              Como supervisor puedes gestionar clientes, asignar cobradores y revisar reportes de tu equipo.
-            </p>
+            <div className="text-gray-600">
+              <p className="mb-2">Como supervisor puedes:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm">
+                <li>✅ Gestionar clientes de tu zona asignada</li>
+                <li>✅ Ver y supervisar a tus cobradores asignados</li>
+                <li>✅ Reportes de tu equipo y zona</li>
+                <li>❌ No puedes ver información de otros supervisores</li>
+              </ul>
+            </div>
           )}
           {user?.role === "collector" && (
-            <p className="text-gray-600">
-              Como cobrador puedes ver tus clientes asignados, registrar pagos y actualizar estados de cobranza.
-            </p>
+            <div className="text-gray-600">
+              <p className="mb-2">Como cobrador puedes:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm">
+                <li>✅ Ver tus clientes asignados únicamente</li>
+                <li>✅ Registrar pagos y actualizar estados</li>
+                <li>✅ Ver tu historial de cobranzas</li>
+                <li>❌ No puedes ver clientes de otros cobradores</li>
+              </ul>
+            </div>
           )}
         </div>
       </main>
