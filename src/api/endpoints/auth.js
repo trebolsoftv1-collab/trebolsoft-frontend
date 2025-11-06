@@ -3,7 +3,12 @@ import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export const login = async (credentials) => {
-  const response = await axios.post(`${API_URL}/api/v1/auth/login`, credentials);
+  // FastAPI OAuth2 expects form data, not JSON
+  const formData = new FormData();
+  formData.append('username', credentials.username);
+  formData.append('password', credentials.password);
+  
+  const response = await axios.post(`${API_URL}/auth/token`, formData);
   return response.data;
 };
 
