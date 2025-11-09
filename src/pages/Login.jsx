@@ -31,10 +31,10 @@ export default function Login() {
       const response = await authAPI.login(formData.username, formData.password);
       
       // Obtener datos del usuario actual
-      // const userData = await authAPI.getCurrentUser(); // Temporal: endpoint no existe
+      const userData = await authAPI.getCurrentUser();
       
       // Guardar en el store
-      login(response.access_token, { username: formData.username, role: "admin" }); // Temporal
+      login(response.access_token, userData);
       
       // Redirigir al dashboard
       navigate('/dashboard');
@@ -117,4 +117,5 @@ export default function Login() {
     </div>
   );
 }
+
 
