@@ -1,33 +1,19 @@
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
-// Obtener token del localStorage
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
+import api from '../axios';
 
 export const getClients = async () => {
-  const response = await axios.get(`${API_URL}/api/v1/clients/`, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.get('/api/v1/clients/');
   return response.data;
 };
 
 export const getClient = async (id) => {
-  const response = await axios.get(`${API_URL}/api/v1/clients/${id}`, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.get(`/api/v1/clients/${id}`);
   return response.data;
 };
 
 export const createClient = async (clientData, photoFile = null) => {
   try {
     // Crear cliente primero
-    const response = await axios.post(`${API_URL}/api/v1/clients/`, clientData, {
-      headers: getAuthHeaders()
-    });
+    const response = await api.post('/api/v1/clients/', clientData);
     
     const newClient = response.data;
     
@@ -46,9 +32,7 @@ export const createClient = async (clientData, photoFile = null) => {
 export const updateClient = async (id, clientData, photoFile = null) => {
   try {
     // Actualizar cliente primero
-    const response = await axios.put(`${API_URL}/api/v1/clients/${id}`, clientData, {
-      headers: getAuthHeaders()
-    });
+    const response = await api.put(`/api/v1/clients/${id}`, clientData);
     
     const updatedClient = response.data;
     
@@ -68,13 +52,12 @@ export const uploadPhoto = async (clientId, file) => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const response = await axios.post(
-    `${API_URL}/api/v1/clients/${clientId}/photo`,
+  const response = await api.post(
+    `/api/v1/clients/${clientId}/photo`,
     formData,
     {
       headers: {
-        ...getAuthHeaders(),
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': undefined
       }
     }
   );
@@ -82,8 +65,6 @@ export const uploadPhoto = async (clientId, file) => {
 };
 
 export const deleteClient = async (id) => {
-  const response = await axios.delete(`${API_URL}/api/v1/clients/${id}`, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.delete(`/api/v1/clients/${id}`);
   return response.data;
 };

@@ -1,44 +1,26 @@
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
-// Obtener token del localStorage
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
+import api from '../axios';
 
 export const getUsers = async () => {
-  const response = await axios.get(`${API_URL}/api/v1/users/`, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.get('/api/v1/users/');
   return response.data;
 };
 
 export const createUser = async (userData) => {
-  const response = await axios.post(`${API_URL}/api/v1/users/`, userData, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.post('/api/v1/users/', userData);
   return response.data;
 };
 
 export const getUser = async (userId) => {
-  const response = await axios.get(`${API_URL}/api/v1/users/${userId}`, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.get(`/api/v1/users/${userId}`);
   return response.data;
 };
 
 export const updateUser = async (userId, userData) => {
-  const response = await axios.put(`${API_URL}/api/v1/users/${userId}`, userData, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.put(`/api/v1/users/${userId}`, userData);
   return response.data;
 };
 
 export const deleteUser = async (userId) => {
-  const response = await axios.delete(`${API_URL}/api/v1/users/${userId}`, {
-    headers: getAuthHeaders()
-  });
+  const response = await api.delete(`/api/v1/users/${userId}`);
   return response.data;
 };
