@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createUser, getUser, getUsers } from '../../api/endpoints/users';
+import { createUser, updateUser, getUser, getUsers } from '../../api/endpoints/users';
 import useAuthStore from '../../store/authStore';
 
 const UserForm = () => {
@@ -99,9 +99,15 @@ const UserForm = () => {
 
       if (!isEditing) {
         userData.password = formData.password;
+        await createUser(userData);
+      } else {
+        // Si está editando y hay contraseña nueva, incluirla
+        if (formData.password) {
+          userData.password = formData.password;
+        }
+        await updateUser(id, userData);
       }
-
-      await createUser(userData);
+      
       navigate('/users');
     } catch (err) {
       setError(err.response?.data?.detail || 'Error al guardar el usuario');
