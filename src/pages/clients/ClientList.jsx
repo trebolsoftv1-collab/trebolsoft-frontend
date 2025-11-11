@@ -20,13 +20,21 @@ export default function ClientList() {
       setLoading(true);
       const data = await clientsAPI.getClients();
       setClients(data);
+      setError(''); // Limpiar error si fue exitoso
     } catch (err) {
       console.error('Error loading clients:', err);
-      setError('Error al cargar clientes');
-      if (err.response?.status === 401) {
-        logout();
-        navigate('/login');
-      }
+      console.error('Error response:', err.response?.data);
+      console.error('Error status:', err.response?.status);
+      
+      // Mostrar el mensaje de error específico del backend
+      const errorMsg = err.response?.data?.detail || err.response?.data?.message || 'Error al cargar clientes';
+      setError(`${errorMsg} (Status: ${err.response?.status || 'unknown'})`);
+      
+      // NO cerrar sesión automáticamente para poder ver el error
+      // if (err.response?.status === 401) {
+      //   logout();
+      //   navigate('/login');
+      // }
     } finally {
       setLoading(false);
     }

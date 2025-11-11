@@ -32,12 +32,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Token expirado o inválido
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
-    }
+    // Por ahora, NO manejar 401 aquí para poder debuggear
+    // Dejamos que los componentes vean el error completo
     return Promise.reject(error);
   }
 );

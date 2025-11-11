@@ -18,9 +18,15 @@ const UsersList = () => {
       setLoading(true);
       const data = await getUsers();
       setUsers(data);
+      setError(null); // Limpiar error si fue exitoso
     } catch (err) {
-      setError('Error al cargar los usuarios');
       console.error('Error fetching users:', err);
+      console.error('Error response:', err.response?.data);
+      console.error('Error status:', err.response?.status);
+      
+      // Mostrar el mensaje de error específico del backend
+      const errorMsg = err.response?.data?.detail || err.response?.data?.message || 'Error al cargar los usuarios';
+      setError(`${errorMsg} (Status: ${err.response?.status || 'unknown'})`);
     } finally {
       setLoading(false);
     }
