@@ -28,12 +28,16 @@ export default function Login() {
     setError('');
 
     try {
+      // Login y obtener token
       const response = await authAPI.login(formData.username, formData.password);
       
-      // Obtener datos del usuario actual
+      // Guardar token temporalmente en localStorage para que los interceptores lo usen
+      localStorage.setItem('access_token', response.access_token);
+      
+      // Obtener datos del usuario actual (ahora con el token en localStorage)
       const userData = await authAPI.getCurrentUser();
       
-      // Guardar en el store
+      // Guardar en el store (esto también actualiza localStorage)
       login(response.access_token, userData);
       
       // Redirigir al dashboard

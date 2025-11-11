@@ -1,16 +1,19 @@
-import axios from 'axios';
+import api from '../axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
-export const login = async (username, password) => { const formData = new FormData(); formData.append('username', username); formData.append('password', password);
+export const login = async (username, password) => {
+  const formData = new FormData();
+  formData.append('username', username);
+  formData.append('password', password);
   
-  const response = await axios.post(`${API_URL}/api/v1/auth/token`, formData);
+  const response = await api.post('/api/v1/auth/token', formData, {
+    headers: {
+      'Content-Type': undefined, // Deja que el navegador establezca el Content-Type con boundary
+    },
+  });
   return response.data;
 };
 
-export const getCurrentUser = async (token) => {
-  const response = await axios.get(`${API_URL}/api/v1/auth/me`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
+export const getCurrentUser = async () => {
+  const response = await api.get('/api/v1/auth/me');
   return response.data;
 };

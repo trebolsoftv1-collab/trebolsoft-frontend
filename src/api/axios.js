@@ -17,6 +17,12 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    
+    // Si el Content-Type es undefined (FormData), dejarlo para que el navegador lo establezca
+    if (config.headers['Content-Type'] === undefined) {
+      delete config.headers['Content-Type'];
+    }
+    
     return config;
   },
   (error) => Promise.reject(error)
