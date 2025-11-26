@@ -115,6 +115,6 @@
 - [Nginx](https://nginx.org/en/docs/)
 
 ---
-
+apt update && apt upgrade -y
 **Fecha:** 10 de noviembre de 2025
 **Autor:** GitHub Copilot
