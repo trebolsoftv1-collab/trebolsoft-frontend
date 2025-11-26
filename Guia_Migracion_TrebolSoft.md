@@ -1,4 +1,41 @@
 # Guía de Migración y Proveedores para TrebolSoft
+## Checklist de despliegue y operación Trebolsoft
+
+1. [ ] Contratar y configurar VPS en DigitalOcean
+	- [ ] Crear cuenta y contratar VPS adecuado
+	- [ ] Configurar sistema operativo y acceso SSH
+
+2. [ ] Configurar dominio y DNS en Namecheap y Cloudflare
+	- [ ] Renovar dominio en Namecheap
+	- [ ] Apuntar DNS a Cloudflare
+	- [ ] Configurar registros DNS en Cloudflare para el VPS
+
+3. [ ] Configurar seguridad y CDN en Cloudflare
+	- [ ] Activar protección DDoS, SSL/TLS y reglas de firewall
+	- [ ] Habilitar CDN para el dominio
+
+4. [ ] Preparar el entorno del servidor (VPS)
+	- [ ] Instalar dependencias básicas (Python, Docker, Git, etc.)
+	- [ ] Clonar repositorio desde GitHub
+	- [ ] Configurar variables de entorno y credenciales
+
+5. [ ] Configurar almacenamiento de fotos en Cloudinary
+	- [ ] Crear cuenta y obtener credenciales API
+	- [ ] Integrar credenciales en el backend
+
+6. [ ] Desplegar backend (FastAPI) y frontend
+	- [ ] Configurar y levantar contenedores Docker (o entorno local)
+	- [ ] Aplicar migraciones de base de datos
+	- [ ] Verificar funcionamiento de endpoints y frontend
+
+7. [ ] Configurar monitorización con UptimeRobot
+	- [ ] Crear cuenta y agregar endpoints críticos (API, frontend, /health)
+	- [ ] Configurar alertas por correo o Telegram
+
+8. [ ] Pruebas finales y checklist
+	- [ ] Verificar acceso desde dominio público
+	- [ ] Probar subida de fotos y funcionalidades principales
+	- [ ] Validar monitorización y alertas
 
 ## Recomendación Final
 
