@@ -11,15 +11,15 @@ export default function Dashboard() {
   };
 
   const roleLabels = {
-    admin: "Administrador",
-    supervisor: "Supervisor",
-    collector: "Cobrador",
+    ADMIN: "Administrador",
+    SUPERVISOR: "Supervisor",
+    COLLECTOR: "Cobrador",
   };
 
   const roleColors = {
-    admin: "bg-danger-100 text-danger-800",
-    supervisor: "bg-secondary-100 text-secondary-800",
-    collector: "bg-primary-100 text-primary-800",
+    ADMIN: "bg-danger-100 text-danger-800",
+    SUPERVISOR: "bg-secondary-100 text-secondary-800",
+    COLLECTOR: "bg-primary-100 text-primary-800",
   };
 
   return (
@@ -95,7 +95,7 @@ export default function Dashboard() {
               </div>
             </button>
 
-            {(user?.role === "admin" || user?.role === "supervisor") && (
+            {(user?.role === "ADMIN" || user?.role === "SUPERVISOR") && (
               <button
                 onClick={() => navigate("/clients/new")}
                 className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition"
@@ -108,7 +108,7 @@ export default function Dashboard() {
               </button>
             )}
 
-            {user?.role === "admin" && (
+            {user?.role === "ADMIN" && (
               <button
                 onClick={() => navigate("/users")}
                 className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition"

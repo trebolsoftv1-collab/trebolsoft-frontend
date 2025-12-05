@@ -46,15 +46,15 @@ export default function ClientForm() {
     try {
       const users = await getUsers();
       
-      if (user.role === 'admin') {
+      if (user.role === 'ADMIN') {
         // Admin ve todos los supervisores y cobradores
-        const supervisorsList = users.filter(u => u.role === 'supervisor');
-        const collectorsList = users.filter(u => u.role === 'collector');
+        const supervisorsList = users.filter(u => u.role === 'SUPERVISOR');
+        const collectorsList = users.filter(u => u.role === 'COLLECTOR');
         setSupervisors(supervisorsList);
         setCollectors(collectorsList);
-      } else if (user.role === 'supervisor') {
+      } else if (user.role === 'SUPERVISOR') {
         // Supervisor ve solo sus cobradores asignados
-        const myCollectors = users.filter(u => u.role === 'collector' && u.supervisor_id === user.id);
+        const myCollectors = users.filter(u => u.role === 'COLLECTOR' && u.supervisor_id === user.id);
         setCollectors(myCollectors);
       }
       // Cobrador no ve lista (se auto-asigna)

@@ -30,7 +30,7 @@ export default function StatsPanel() {
   const fetchUsers = async () => {
     const response = await api.get('/api/v1/users/');
     setUsers(response.data);
-    setSupervisors(response.data.filter(u => u.role === 'admin' || u.role === 'supervisor'));
+    setSupervisors(response.data.filter(u => u.role === 'ADMIN' || u.role === 'SUPERVISOR'));
   };
 
   return (

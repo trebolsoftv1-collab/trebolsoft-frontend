@@ -15,7 +15,7 @@ const UserForm = () => {
     full_name: '',
     phone: '',
     zone: '',
-    role: 'collector',
+    role: 'COLLECTOR',
     supervisor_id: '',
     password: '',
     confirmPassword: ''
@@ -35,7 +35,7 @@ const UserForm = () => {
   const fetchSupervisors = async () => {
     try {
       const users = await getUsers();
-      const supervisorsList = users.filter(u => u.role === 'admin' || u.role === 'supervisor');
+      const supervisorsList = users.filter(u => u.role === 'ADMIN' || u.role === 'SUPERVISOR');
       setSupervisors(supervisorsList);
     } catch (err) {
       console.error('Error fetching supervisors:', err);
@@ -51,7 +51,7 @@ const UserForm = () => {
         full_name: userData.full_name || '',
         phone: userData.phone || '',
         zone: userData.zone || '',
-        role: userData.role || 'collector',
+        role: userData.role || 'COLLECTOR',
         supervisor_id: userData.supervisor_id || '',
         password: '',
         confirmPassword: ''

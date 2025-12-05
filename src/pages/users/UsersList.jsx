@@ -34,15 +34,15 @@ const UsersList = () => {
 
   const getRoleBadge = (role) => {
     const styles = {
-      admin: 'bg-red-100 text-red-800',
-      supervisor: 'bg-blue-100 text-blue-800',
-      collector: 'bg-green-100 text-green-800'
+      ADMIN: 'bg-red-100 text-red-800',
+      SUPERVISOR: 'bg-blue-100 text-blue-800',
+      COLLECTOR: 'bg-green-100 text-green-800'
     };
     
     const labels = {
-      admin: 'Administrador',
-      supervisor: 'Supervisor',
-      collector: 'Cobrador'
+      ADMIN: 'Administrador',
+      SUPERVISOR: 'Supervisor',
+      COLLECTOR: 'Cobrador'
     };
 
     return (
@@ -72,7 +72,7 @@ const UsersList = () => {
     <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Gestión de Usuarios</h1>
-        {user?.role === 'admin' && (
+        {user?.role === 'ADMIN' && (
           <Link
             to="/users/new"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
@@ -144,7 +144,7 @@ const UsersList = () => {
                   >
                     Ver
                   </Link>
-                  {user?.role === 'admin' && (
+                  {user?.role === 'ADMIN' && (
                     <Link
                       to={`/users/${userData.id}/edit`}
                       className="text-indigo-600 hover:text-indigo-900"
