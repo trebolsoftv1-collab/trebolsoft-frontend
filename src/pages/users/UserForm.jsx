@@ -118,7 +118,7 @@ const UserForm = () => {
   };
 
   // Solo admin puede acceder a esta página
-  if (currentUser?.role !== 'admin') {
+  if (currentUser?.role !== 'ADMIN') {
     return (
       <div className="container mx-auto px-4 py-6">
         <div className="bg-red-50 border border-red-200 rounded-md p-4">

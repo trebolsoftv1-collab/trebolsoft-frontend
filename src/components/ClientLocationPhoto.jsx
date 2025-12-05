@@ -86,6 +86,7 @@ export default function ClientLocationPhoto({ onLocationUpdate, onPhotoSelect, i
             ref={fileInputRef}
             type="file"
             accept="image/*"
+            capture="environment"
             onChange={handlePhotoSelect}
             className="hidden"
           />
