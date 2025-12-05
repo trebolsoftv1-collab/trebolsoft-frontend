@@ -118,15 +118,7 @@ const UserForm = () => {
   };
 
   // Solo admin puede acceder a esta página
-  if (currentUser?.role !== 'ADMIN') {
-    return (
-      <div className="container mx-auto px-4 py-6">
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-red-600">No tienes permisos para acceder a esta página</p>
-        </div>
-      </div>
-    );
-  }
+  // Restricción eliminada: la visibilidad del módulo ya está controlada en el dashboard
 
   return (
     <div className="container mx-auto px-4 py-6">
