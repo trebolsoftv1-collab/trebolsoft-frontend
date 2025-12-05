@@ -180,6 +180,10 @@ export default function ClientForm() {
       return;
     }
 
+    if (user.role !== 'ADMIN' && user.role !== 'SUPERVISOR' && user.role !== 'COLLECTOR') {
+      setError('No tienes permisos para crear clientes');
+      return;
+    }
     try {
       setLoading(true);
       setError('');
@@ -505,11 +509,17 @@ export default function ClientForm() {
             <div>
               <h3 className="text-lg font-medium text-gray-900 mb-4">Ubicación y Foto</h3>
               <ClientLocationPhoto
-                onLocationUpdate={handleLocationUpdate}
-                onPhotoChange={handlePhotoChange}
-                initialLatitude={formData.latitude}
-                initialLongitude={formData.longitude}
-                initialPhotoUrl={photoPreview}
+                onLocationUpdate={(loc) => {
+                  if (loc && loc.latitude && loc.longitude) {
+                    setFormData(prev => ({ ...prev, latitude: loc.latitude, longitude: loc.longitude }));
+                  }
+                }}
+                onPhotoSelect={(file) => {
+                  setPhotoFile(file);
+                  setPhotoPreview(file ? URL.createObjectURL(file) : '');
+                }}
+                initialLocation={formData.latitude && formData.longitude ? { latitude: formData.latitude, longitude: formData.longitude } : null}
+                initialPhoto={photoPreview}
               />
             </div>
 

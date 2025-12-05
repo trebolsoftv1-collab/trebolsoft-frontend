@@ -54,7 +54,11 @@ export default function ClientList() {
   };
 
   const canEditClient = () => {
-    return user?.role === 'admin' || user?.role === 'supervisor';
+    return user?.role === 'ADMIN' || user?.role === 'SUPERVISOR';
+  };
+
+  const canDeleteClient = () => {
+    return user?.role === 'ADMIN';
   };
 
   const getGoogleMapsUrl = (latitude, longitude) => {
@@ -118,6 +122,7 @@ export default function ClientList() {
           <button
             onClick={() => navigate('/clients/new')}
             className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition'
+            disabled={!(user?.role === 'ADMIN' || user?.role === 'SUPERVISOR' || user?.role === 'COLLECTOR')}
           >
             + Nuevo Cliente
           </button>
@@ -263,6 +268,14 @@ export default function ClientList() {
                               className='text-indigo-600 hover:text-indigo-900'
                             >
                               Editar
+                            </button>
+                          )}
+                          {canDeleteClient() && (
+                            <button
+                              onClick={() => {/* lógica de eliminación aquí */}}
+                              className='text-red-600 hover:text-red-900'
+                            >
+                              Eliminar
                             </button>
                           )}
                         </div>

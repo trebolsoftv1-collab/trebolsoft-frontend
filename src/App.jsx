@@ -76,7 +76,7 @@ function App() {
         <Route
           path="/clients/:id/edit"
           element={
-            <ProtectedRoute allowedRoles={['admin', 'supervisor']}>
+            <ProtectedRoute allowedRoles={['ADMIN', 'SUPERVISOR']}>
               <ClientForm />
             </ProtectedRoute>
           }
@@ -87,7 +87,7 @@ function App() {
         <Route
           path="/users"
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['ADMIN']}>
               <UsersList />
             </ProtectedRoute>
           }
