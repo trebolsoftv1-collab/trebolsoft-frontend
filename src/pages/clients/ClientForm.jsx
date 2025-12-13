@@ -17,6 +17,7 @@ export default function ClientForm() {
     phone: '',
     phone2: '',
     email: '',
+    ocupacion: '',
     city: '',
     address: '',
     latitude: null,
@@ -73,6 +74,7 @@ export default function ClientForm() {
         phone: data.phone || '',
         phone2: data.phone2 || '',
         email: data.email || '',
+        ocupacion: data.ocupacion || '',
         city: data.city || '',
         address: data.address || '',
         latitude: data.latitude,
@@ -309,6 +311,21 @@ export default function ClientForm() {
                     required
                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     placeholder="Juan Pérez García"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="ocupacion" className="block text-sm font-medium text-gray-700">
+                    Ocupación u Oficio
+                  </label>
+                  <input
+                    type="text"
+                    id="ocupacion"
+                    name="ocupacion"
+                    value={formData.ocupacion}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="Ej: Comerciante, Albañil, Estilista..."
                   />
                 </div>
               </div>
