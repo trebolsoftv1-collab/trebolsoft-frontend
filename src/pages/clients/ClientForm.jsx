@@ -175,7 +175,7 @@ export default function ClientForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    console.log('handleSubmit ejecutado');
     if (!validateForm()) {
       return;
     }
