@@ -15,6 +15,11 @@ export const getUser = async (userId) => {
   return response.data;
 };
 
+export const getMe = async () => {
+  const response = await api.get('/api/v1/users/me');
+  return response.data;
+};
+
 export const updateUser = async (userId, userData) => {
   const response = await api.put(`/api/v1/users/${userId}`, userData);
   return response.data;

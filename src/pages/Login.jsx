@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import * as authAPI from '../api/endpoints/auth';
+import { getMe } from '../api/endpoints/users';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function Login() {
       localStorage.setItem('access_token', response.access_token);
       
       // Obtener datos del usuario actual (ahora con el token en localStorage)
-      const userData = await authAPI.getCurrentUser();
+      const userData = await getMe();
       
       // Guardar en el store (esto también actualiza localStorage)
       login(response.access_token, userData);
