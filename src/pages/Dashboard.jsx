@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
+import UserMenu from "../components/UserMenu";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -37,12 +38,7 @@ export default function Dashboard() {
               <span className={`px-3 py-1 rounded-full text-sm font-medium ${roleColors[user?.role]}`}>
                 {roleLabels[user?.role]}
               </span>
-              <button
-                onClick={handleLogout}
-                className="bg-danger-600 text-white px-4 py-2 rounded-lg hover:bg-danger-700 transition"
-              >
-                Cerrar Sesión
-              </button>
+              <UserMenu onLogout={handleLogout} />
             </div>
           </div>
         </div>
