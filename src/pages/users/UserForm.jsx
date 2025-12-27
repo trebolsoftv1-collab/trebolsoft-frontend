@@ -8,6 +8,26 @@ const UserForm = () => {
   const { id } = useParams();
   const { user: currentUser } = useAuthStore();
   const isEditing = Boolean(id);
+  // Si no es admin, mostrar acceso denegado
+  if (!currentUser || currentUser.role !== 'ADMIN') {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="bg-white p-8 rounded-lg shadow-md text-center">
+          <div className="mb-4">
+            <span style={{fontSize: '3rem', color: '#facc15'}}>⚠️</span>
+          </div>
+          <h2 className="text-2xl font-bold mb-2 text-gray-900">Acceso Denegado</h2>
+          <p className="mb-6 text-gray-700">No tienes permisos para acceder a esta sección.</p>
+          <button
+            className="px-4 py-2 bg-green-600 text-white rounded-md font-medium"
+            onClick={() => navigate(-1)}
+          >
+            Volver
+          </button>
+        </div>
+      </div>
+    );
+  }
   
   const [formData, setFormData] = useState({
     username: '',
