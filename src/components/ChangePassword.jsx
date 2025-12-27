@@ -14,7 +14,7 @@ export default function ChangePassword() {
     setSuccess("");
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("access_token");
       const res = await axios.patch(
         "/users/me/password",
         { current_password: currentPassword, new_password: newPassword },
