@@ -131,7 +131,7 @@ export default function Dashboard() {
           <h3 className="text-lg font-semibold text-gray-900 mb-3">
             Panel de {roleLabels[user?.role]}
           </h3>
-          {user?.role === "admin" && (
+          {user?.role === "ADMIN" && (
             <div className="text-gray-600">
               <p className="mb-2">Como administrador tienes acceso completo al sistema:</p>
               <ul className="list-disc list-inside space-y-1 text-sm">
@@ -143,7 +143,7 @@ export default function Dashboard() {
               </ul>
             </div>
           )}
-          {user?.role === "supervisor" && (
+          {user?.role === "SUPERVISOR" && (
             <div className="text-gray-600">
               <p className="mb-2">Como supervisor puedes:</p>
               <ul className="list-disc list-inside space-y-1 text-sm">
@@ -154,7 +154,7 @@ export default function Dashboard() {
               </ul>
             </div>
           )}
-          {user?.role === "collector" && (
+          {user?.role === "COLLECTOR" && (
             <div className="text-gray-600">
               <p className="mb-2">Como cobrador puedes:</p>
               <ul className="list-disc list-inside space-y-1 text-sm">

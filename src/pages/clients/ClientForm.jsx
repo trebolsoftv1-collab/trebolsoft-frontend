@@ -84,7 +84,7 @@ export default function ClientForm() {
       setPhotoPreview(data.house_photo_url || '');
       
       // Si hay collector_id, buscar su supervisor para admin
-      if (data.collector_id && user.role === 'admin') {
+      if (data.collector_id && user.role === 'ADMIN') {
         const collector = collectors.find(c => c.id === data.collector_id);
         if (collector) {
           setSelectedSupervisor(collector.supervisor_id || '');
@@ -130,13 +130,13 @@ export default function ClientForm() {
   };
 
   const getCollectorAssignment = () => {
-    if (user.role === 'admin') {
+    if (user.role === 'ADMIN') {
       // Admin debe seleccionar supervisor y cobrador
       return formData.collector_id;
-    } else if (user.role === 'supervisor') {
+    } else if (user.role === 'SUPERVISOR') {
       // Supervisor debe seleccionar uno de sus cobradores
       return formData.collector_id;
-    } else if (user.role === 'collector') {
+    } else if (user.role === 'COLLECTOR') {
       // Cobrador se auto-asigna
       return user.id;
     }
@@ -164,9 +164,9 @@ export default function ClientForm() {
     // Validar asignación según rol
     const collectorId = getCollectorAssignment();
     if (!collectorId) {
-      if (user.role === 'admin') {
+      if (user.role === 'ADMIN') {
         setError('Debe seleccionar un supervisor y un cobrador');
-      } else if (user.role === 'supervisor') {
+      } else if (user.role === 'SUPERVISOR') {
         setError('Debe seleccionar un cobrador');
       }
       return false;
@@ -242,8 +242,8 @@ export default function ClientForm() {
                 {isEdit ? 'Editar Cliente' : 'Nuevo Cliente'}
               </h1>
               <p className="text-sm text-gray-600 mt-1">
-                {user?.full_name || user?.username} - {user?.role === 'admin' ? 'Administrador' : user?.role === 'supervisor' ? 'Supervisor' : 'Cobrador'}
-              </p>
+                  {user?.full_name || user?.username} - {user?.role === 'ADMIN' ? 'Administrador' : user?.role === 'SUPERVISOR' ? 'Supervisor' : 'Cobrador'}
+                </p>
             </div>
             <div className="flex items-center gap-4">
               <button
@@ -422,7 +422,7 @@ export default function ClientForm() {
             </div>
 
             {/* Asignación según Rol */}
-            {user.role === 'admin' && (
+            {user.role === 'ADMIN' && (
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Asignación (Admin)</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -471,7 +471,7 @@ export default function ClientForm() {
               </div>
             )}
 
-            {user.role === 'supervisor' && (
+            {user.role === 'SUPERVISOR' && (
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Asignación (Supervisor)</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -511,7 +511,7 @@ export default function ClientForm() {
               </div>
             )}
 
-            {user.role === 'collector' && (
+            {user.role === 'COLLECTOR' && (
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Asignación (Cobrador)</h3>
                 <div className="bg-blue-50 border border-blue-200 rounded-md p-4">

@@ -70,9 +70,9 @@ export default function ClientList() {
 
   const getRoleLabel = (role) => {
     const labels = {
-      admin: 'Administrador',
-      supervisor: 'Supervisor', 
-      collector: 'Cobrador'
+      ADMIN: 'Administrador',
+      SUPERVISOR: 'Supervisor', 
+      COLLECTOR: 'Cobrador'
     };
     return labels[role] || role;
   };

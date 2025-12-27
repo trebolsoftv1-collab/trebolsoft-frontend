@@ -97,7 +97,7 @@ function App() {
         <Route
           path="/users/new"
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['ADMIN']}>
               <UserForm />
             </ProtectedRoute>
           }
@@ -107,7 +107,7 @@ function App() {
         <Route
           path="/users/:id"
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['ADMIN']}>
               <UsersList />
             </ProtectedRoute>
           }
@@ -116,7 +116,7 @@ function App() {
         <Route
           path="/users/:id/edit"
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['ADMIN']}>
               <UserForm />
             </ProtectedRoute>
           }
