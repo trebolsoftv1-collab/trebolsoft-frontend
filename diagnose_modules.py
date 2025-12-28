@@ -51,14 +51,18 @@ def diagnose():
     # 3. Verificar Permisos
     print("\n👤 3. Verificando Rol y Permisos...")
     try:
-        me = requests.get(f"{BASE_URL}/api/v1/users/me", headers=headers).json()
-        print(f"   Usuario: {me['username']}")
-        print(f"   Rol: {me['role']}")
-        print(f"   Superusuario: {me.get('is_superuser', False)}")
-        
-        if not me.get('is_superuser', False) and me['role'] != 'admin':
-            print("   ⚠️ ADVERTENCIA: Este usuario no es admin ni superusuario.")
-            print("      Esto explica por qué no abren los módulos (Acceso Denegado).")
+        resp = requests.get(f"{BASE_URL}/api/v1/users/me", headers=headers)
+        if resp.status_code == 200:
+            me = resp.json()
+            print(f"   Usuario: {me.get('username')}")
+            print(f"   Rol: {me.get('role')}")
+            print(f"   Superusuario: {me.get('is_superuser', False)}")
+            
+            if not me.get('is_superuser', False) and me.get('role') != 'admin':
+                print("   ⚠️ ADVERTENCIA: Este usuario no es admin ni superusuario.")
+        else:
+            print(f"   ❌ Error obteniendo perfil: {resp.status_code}")
+            print(f"      Respuesta: {resp.text}")
     except Exception as e:
         print(f"   ❌ Error obteniendo perfil: {e}")
 
