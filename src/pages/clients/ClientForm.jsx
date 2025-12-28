@@ -28,6 +28,7 @@ export default function ClientForm() {
   const [supervisors, setSupervisors] = useState([]);
   const [collectors, setCollectors] = useState([]);
   const [selectedSupervisor, setSelectedSupervisor] = useState('');
+  const [mySupervisor, setMySupervisor] = useState(null);
   
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState('');
@@ -57,8 +58,12 @@ export default function ClientForm() {
         // Supervisor ve solo sus cobradores asignados
         const myCollectors = users.filter(u => u.role === 'COLLECTOR' && u.supervisor_id === user.id);
         setCollectors(myCollectors);
+      } else if (user.role === 'COLLECTOR' && user.supervisor_id) {
+        // Cobrador necesita ver quién es su supervisor
+        const allUsers = await getUsers(); // O una llamada optimizada si existe
+        const sup = allUsers.find(u => u.id === user.supervisor_id);
+        setMySupervisor(sup);
       }
-      // Cobrador no ve lista (se auto-asigna)
     } catch (err) {
       console.error('Error loading users:', err);
     }
@@ -514,10 +519,29 @@ export default function ClientForm() {
             {user.role === 'COLLECTOR' && (
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Asignación (Cobrador)</h3>
-                <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
-                  <p className="text-blue-800">
-                    <strong>Auto-asignado:</strong> Este cliente será asignado automáticamente a ti ({user.full_name}) bajo la supervisión de tu supervisor.
-                  </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Supervisor Asignado
+                    </label>
+                    <input
+                      type="text"
+                      value={mySupervisor ? mySupervisor.full_name : 'Cargando...'}
+                      disabled
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-600 sm:text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Cobrador Asignado
+                    </label>
+                    <input
+                      type="text"
+                      value={user.full_name}
+                      disabled
+                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-600 sm:text-sm"
+                    />
+                  </div>
                 </div>
               </div>
             )}
