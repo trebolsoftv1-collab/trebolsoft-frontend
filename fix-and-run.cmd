@@ -1,5 +1,5 @@
 @echo off
-cd /d "C:\Users\jpancha\trebolsoft-frontend"
+cd /d "%~dp0"
 set PATH=%PATH%;C:\Program Files\nodejs
 
 echo Instalando paquete faltante de Tailwind...
