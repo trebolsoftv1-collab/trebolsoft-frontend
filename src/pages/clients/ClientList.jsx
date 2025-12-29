@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
 import * as clientsAPI from '../../api/endpoints/clients';
+import api from '../../api/axios';
 
 export default function ClientList() {
   const navigate = useNavigate();
@@ -77,6 +78,18 @@ export default function ClientList() {
     return labels[role] || role;
   };
 
+  const handleDelete = async (id) => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+      try {
+        // Usamos api directo para asegurar la ruta correcta
+        await api.delete(`/api/v1/clients/${id}`);
+        setClients(clients.filter(c => c.id !== id));
+      } catch (err) {
+        alert('Error al eliminar el cliente: ' + (err.response?.data?.detail || 'Error desconocido'));
+      }
+    }
+  };
+
   return (
     <div className='min-h-screen bg-gray-50'>
       {/* Header */}
@@ -84,7 +97,9 @@ export default function ClientList() {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
           <div className='flex justify-between items-center'>
             <div>
-              <h1 className='text-2xl font-bold text-gray-900'>Clientes</h1>
+              <h1 className='text-2xl font-bold text-gray-900'>
+                Clientes <span className="text-gray-500">({clients.length})</span>
+              </h1>
               <p className='text-sm text-gray-600 mt-1'>
                 {user?.full_name || user?.username} - {getRoleLabel(user?.role)}
               </p>
@@ -272,7 +287,7 @@ export default function ClientList() {
                           )}
                           {canDeleteClient() && (
                             <button
-                              onClick={() => {/* lógica de eliminación aquí */}}
+                              onClick={() => handleDelete(client.id)}
                               className='text-red-600 hover:text-red-900'
                             >
                               Eliminar

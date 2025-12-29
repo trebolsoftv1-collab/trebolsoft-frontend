@@ -1,10 +1,32 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
 import UserMenu from "../components/UserMenu";
+import api from "../api/axios";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const [stats, setStats] = useState({ moneyToday: 0, pending: 0 });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        // Obtener fecha de hoy en formato YYYY-MM-DD
+        const today = new Date().toISOString().split('T')[0];
+        // Consultar API filtrando por hoy para ver lo recaudado
+        const { data } = await api.get(`/api/v1/stats/?start_date=${today}&end_date=${today}`);
+        setStats({
+          moneyToday: data.monto_total || 0,
+          pending: data.total_pendientes || 0
+        });
+      } catch (error) {
+        console.error("Error cargando estadísticas:", error);
+      }
+    };
+
+    if (user) fetchStats();
+  }, [user]);
 
   const handleLogout = () => {
     logout();
@@ -45,22 +67,14 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Total Clientes</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">--</p>
-              </div>
-              <div className="text-primary-600 text-4xl">👥</div>
-            </div>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Cobranzas Hoy</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">--</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">
+                  {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(stats.moneyToday)}
+                </p>
               </div>
               <div className="text-secondary-600 text-4xl">💰</div>
             </div>
@@ -70,7 +84,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Pendientes</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">--</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2">{stats.pending}</p>
               </div>
               <div className="text-danger-600 text-4xl">⏰</div>
             </div>
@@ -117,7 +131,10 @@ export default function Dashboard() {
               </button>
             )}
 
-            <button className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition">
+            <button 
+              onClick={() => navigate("/stats")}
+              className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition"
+            >
               <span className="text-3xl">📊</span>
               <div className="text-left">
                 <p className="font-semibold text-gray-900">Reportes</p>

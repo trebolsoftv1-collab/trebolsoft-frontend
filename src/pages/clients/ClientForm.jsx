@@ -56,7 +56,8 @@ export default function ClientForm() {
         setCollectors(collectorsList);
       } else if (user.role === 'SUPERVISOR') {
         // Supervisor ve solo sus cobradores asignados
-        const myCollectors = users.filter(u => u.role === 'COLLECTOR' && u.supervisor_id === user.id);
+        // El backend ya filtra los permitidos (propios + asignados), así que mostramos todos los que lleguen
+        const myCollectors = users.filter(u => u.role === 'COLLECTOR');
         setCollectors(myCollectors);
       } else if (user.role === 'COLLECTOR' && user.supervisor_id) {
         // Cobrador necesita ver quién es su supervisor

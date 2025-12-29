@@ -8,6 +8,7 @@ import ClientList from './pages/clients/ClientList';
 import ClientForm from './pages/clients/ClientForm';
 import UsersList from './pages/users/UsersList';
 import UserForm from './pages/users/UserForm';
+import Stats from './pages/Stats';
 
 function App() {
   const hydrate = useAuthStore((state) => state.hydrate);
@@ -78,6 +79,16 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['ADMIN', 'SUPERVISOR']}>
               <ClientForm />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Reportes - Todos pueden ver */}
+        <Route
+          path="/stats"
+          element={
+            <ProtectedRoute>
+              <Stats />
             </ProtectedRoute>
           }
         />
