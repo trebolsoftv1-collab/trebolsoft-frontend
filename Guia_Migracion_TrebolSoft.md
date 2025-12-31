@@ -1,3 +1,4 @@
+<!-- sync-forced-2025 -->
 # Guía de Migración y Proveedores para TrebolSoft
 ## Checklist de despliegue y operación Trebolsoft
 

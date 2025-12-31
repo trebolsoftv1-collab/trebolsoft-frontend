@@ -1,3 +1,4 @@
+<!-- sync-forced-2025 -->
 # 🔄 GUÍA DE MIGRACIÓN - TrebolSoft Frontend
 
 ## 📦 **MIGRACIÓN A NUEVA COMPUTADORA**

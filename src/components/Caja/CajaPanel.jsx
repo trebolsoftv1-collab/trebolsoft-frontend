@@ -1,3 +1,4 @@
+// sync-forced-2025
 import React from "react";
 
 const CajaPanel = ({ caja, movimientos, onRetiro, onTransferencia, onCierre }) => {

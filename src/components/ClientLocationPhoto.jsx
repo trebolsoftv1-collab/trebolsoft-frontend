@@ -1,4 +1,5 @@
-﻿import React, { useState, useRef } from 'react';
+﻿// sync-forced-2025
+import React, { useState, useRef } from 'react';
 import { MapPinIcon, CameraIcon } from '@heroicons/react/24/outline';
 
 export default function ClientLocationPhoto({ onLocationUpdate, onPhotoSelect, initialLocation, initialPhoto }) {

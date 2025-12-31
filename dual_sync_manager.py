@@ -4,6 +4,8 @@
 Sincroniza tanto el backend como el frontend
 """
 
+# sync-forced-2025
+
 import os
 import subprocess
 import sys

@@ -1,4 +1,5 @@
 @echo off
+REM sync-forced-2025
 cd /d "%~dp0"
 set PATH=%PATH%;C:\Program Files\nodejs
 

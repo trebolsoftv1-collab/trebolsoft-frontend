@@ -1,3 +1,4 @@
+<!-- sync-forced-2025 -->
 # 🔄 SINCRONIZACIÓN COMPLETA TREBOLSOFT - Frontend
 
 ## 📋 **INFORMACIÓN DEL REPOSITORIO**

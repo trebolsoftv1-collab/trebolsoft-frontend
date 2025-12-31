@@ -1,3 +1,4 @@
+// sync-forced-2025
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [

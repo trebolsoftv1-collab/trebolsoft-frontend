@@ -1,4 +1,5 @@
-﻿import { defineConfig } from 'vite'
+﻿// sync-forced-2025
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 

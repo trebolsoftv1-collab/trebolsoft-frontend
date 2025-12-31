@@ -1,3 +1,5 @@
+// sync-forced-2025
+// sync-forced-2025
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
