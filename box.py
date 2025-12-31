@@ -5,7 +5,6 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.dependencies import get_current_user
 from app.models.user import User, RoleType
-from app.schemas.box import Box as BoxSchema, BoxMovementCreate, BoxUpdate, CashCount, BoxCloseResponse
 from app.schemas.box import Box as BoxSchema, BoxMovementCreate, BoxUpdate, CashCount, BoxCloseResponse, BoxMovement
 from app.crud import box as crud_box
 from app.crud import user as crud_user
@@ -179,35 +178,3 @@ def admin_update_box(
     db.commit()
     db.refresh(box)
     return box
-
-@router.post("/close-day", response_model=BoxCloseResponse)
-def close_day_box(
-    cash_count: CashCount,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    """
-    Realiza el arqueo de caja.
-    El cobrador ingresa la cantidad de billetes y monedas.
-    El sistema compara con el saldo registrado.
-    """
-    box = crud_box.get_box_by_user_id(db, current_user.id)
-    if not box:
-        raise HTTPException(status_code=404, detail="Box not found")
-
-    system_balance = box.base_balance
-    counted_balance = cash_count.total_amount
-    difference = counted_balance - system_balance
-    
-    status_str = "MATCH"
-    if difference > 0.01: # Usamos un pequeño margen por flotantes
-        status_str = "SURPLUS" # Sobrante
-    elif difference < -0.01:
-        status_str = "SHORTAGE" # Faltante
-    
-    return {
-        "system_balance": system_balance,
-        "counted_balance": counted_balance,
-        "difference": difference,
-        "status": status_str
-    }
