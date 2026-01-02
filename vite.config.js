@@ -30,27 +30,18 @@ export default defineConfig({
           }
         ]
       },
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/trebolsoft\.onrender\.com\/api\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 86400
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
-        ]
-      }
+      // Eliminamos la configuración de workbox que apuntaba a Render
     })
   ],
   server: {
-    port: 3000
+    port: 3000,
+    // Proxy para redirigir las llamadas /api al backend en desarrollo
+    proxy: {
+      '/api': {
+        target: 'http://localhost:10000', // El puerto del backend V1
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '') // Opcional: si el backend no espera /api
+      }
+    }
   }
 })

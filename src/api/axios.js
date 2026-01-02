@@ -1,7 +1,10 @@
 // sync-forced-2025
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000';
+// La URL base ahora apunta a una ruta relativa.
+// En desarrollo, el proxy de Vite lo interceptará y redirigirá a http://localhost:10000/api
+// En producción, el servidor web (Nginx) lo redirigirá a https://api.trebolsoft.com
+const API_URL = '/api';
 
 // Crear instancia de axios con configuración base
 const api = axios.create({
@@ -33,8 +36,11 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Por ahora, NO manejar 401 aquí para poder debuggear
-    // Dejamos que los componentes vean el error completo
+    // Si recibimos un 401 (No autorizado), podríamos redirigir al login.
+    if (error.response && error.response.status === 401) {
+      // localStorage.removeItem('access_token');
+      // window.location.href = '/login';
+    }
     return Promise.reject(error);
   }
 );
