@@ -32,7 +32,6 @@ const UserForm = () => {
   
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     full_name: '',
     phone: '',
     zone: '',
@@ -68,7 +67,6 @@ const UserForm = () => {
       const userData = await getUser(id);
       setFormData({
         username: userData.username || '',
-        email: userData.email || '',
         full_name: userData.full_name || '',
         phone: userData.phone || '',
         zone: userData.zone || '',
@@ -110,7 +108,6 @@ const UserForm = () => {
 
       const userData = {
         username: formData.username,
-        email: formData.email,
         full_name: formData.full_name,
         phone: formData.phone || null,
         zone: formData.zone || null,

@@ -142,6 +142,19 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-600">Ver estadísticas</p>
               </div>
             </button>
+
+            {/* === BOTÓN DE CAJA === */}
+            <button
+              onClick={() => navigate("/caja")}
+              className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition"
+            >
+              <span className="text-3xl">📦</span>
+              <div className="text-left">
+                <p className="font-semibold text-gray-900">Módulo de Caja</p>
+                <p className="text-sm text-gray-600">Ver saldos y movimientos</p>
+              </div>
+            </button>
+
           </div>
         </div>
 

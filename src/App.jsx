@@ -10,6 +10,7 @@ import ClientForm from './pages/clients/ClientForm';
 import UsersList from './pages/users/UsersList';
 import UserForm from './pages/users/UserForm';
 import Stats from './pages/Stats';
+import CajaPage from './pages/CajaPage';
 
 function App() {
   const hydrate = useAuthStore((state) => state.hydrate);
@@ -90,6 +91,16 @@ function App() {
           element={
             <ProtectedRoute>
               <Stats />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* === RUTA DE CAJA === */}
+        <Route
+          path="/caja"
+          element={
+            <ProtectedRoute>
+              <CajaPage />
             </ProtectedRoute>
           }
         />
