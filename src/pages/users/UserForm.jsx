@@ -192,22 +192,6 @@ const UserForm = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Correo Electrónico
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="usuario@trebolsoft.com"
-                />
-              </div>
-
               {/* Teléfono */}
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700">

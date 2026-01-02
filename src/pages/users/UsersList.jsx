@@ -1,7 +1,7 @@
 // sync-forced-2025
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getUsers } from '../../api/endpoints/users';
+import { getUsers, deleteUser } from '../../api/endpoints/users';
 import useAuthStore from '../../store/authStore';
 
 const UsersList = () => {
@@ -9,6 +9,8 @@ const UsersList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useAuthStore();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -30,6 +32,24 @@ const UsersList = () => {
       setError(`${errorMsg} (Status: ${err.response?.status || 'unknown'})`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = (user) => {
+    setUserToDelete(user);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!userToDelete) return;
+    try {
+      await deleteUser(userToDelete.id);
+      setShowDeleteModal(false);
+      setUserToDelete(null);
+      fetchUsers(); // Recargar la lista de usuarios
+    } catch (err) {
+      setError(`Error al eliminar el usuario: ${err.response?.data?.detail || err.message}`);
+      setShowDeleteModal(false);
     }
   };
 
@@ -73,14 +93,22 @@ const UsersList = () => {
     <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Gestión de Usuarios</h1>
-        {user?.role === 'ADMIN' && (
+        <div className="flex items-center gap-4">
           <Link
-            to="/users/new"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+            to="/dashboard"
+            className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium"
           >
-            Nuevo Usuario
+            ← Volver al Dashboard
           </Link>
-        )}
+          {user?.role === 'ADMIN' && (
+            <Link
+              to="/users/new"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Nuevo Usuario
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -115,7 +143,6 @@ const UsersList = () => {
               <tr key={userData.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{userData.username}</div>
-                  <div className="text-sm text-gray-500">{userData.email}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{userData.full_name}</div>
@@ -153,6 +180,14 @@ const UsersList = () => {
                       Editar
                     </Link>
                   )}
+                  {user?.role === 'ADMIN' && (
+                    <button
+                      onClick={() => handleDeleteClick(userData)}
+                      className="text-red-600 hover:text-red-900 ml-3"
+                    >
+                      Eliminar
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -165,6 +200,30 @@ const UsersList = () => {
           </div>
         )}
       </div>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+          <div className="bg-white p-8 rounded-lg shadow-xl">
+            <h2 className="text-xl font-bold mb-4">Confirmar Eliminación</h2>
+            <p>¿Estás seguro de que quieres eliminar al usuario <strong>{userToDelete?.full_name}</strong>?</p>
+            <p className="text-sm text-gray-600 mt-2">Esta acción no se puede deshacer.</p>
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 mr-3 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -8,7 +8,6 @@ import CajaDashboard from '../components/Caja/CajaDashboard';
 import CajaPanel from '../components/Caja/CajaPanel';
 import CajaMovimientos from '../components/Caja/CajaMovimientos';
 import CierreCajaPanel from '../components/Caja/CierreCajaPanel';
-import VoladosPanel from '../components/Caja/VoladosPanel';
 
 // Componente simple para las pestañas
 const Tab = ({ label, isActive, onClick }) => (
@@ -59,7 +58,6 @@ const CajaPage = () => {
   const resumenData = {
     saldoTotal: saldo,
     microseguro: 150000, // Ejemplo
-    volados: 80000, // Ejemplo
     prestamosActivos: 1200000, // Ejemplo
     gastos: 50000, // Ejemplo
   };
@@ -82,7 +80,6 @@ const CajaPage = () => {
             <Tab label="Resumen" isActive={activeTab === 'resumen'} onClick={() => setActiveTab('resumen')} />
             <Tab label="Transacciones" isActive={activeTab === 'transacciones'} onClick={() => setActiveTab('transacciones')} />
             <Tab label="Cierre de Caja" isActive={activeTab === 'cierre'} onClick={() => setActiveTab('cierre')} />
-            <Tab label="Volados" isActive={activeTab === 'volados'} onClick={() => setActiveTab('volados')} />
           </div>
         </div>
 
@@ -115,14 +112,6 @@ const CajaPage = () => {
             <CierreCajaPanel 
               resumenDia={{}} // Necesitaremos cargar esta info
               onConfirmarCierre={() => {}}
-            />
-          )}
-
-          {activeTab === 'volados' && (
-            <VoladosPanel 
-              volados={[]} // Necesitaremos cargar volados
-              clientes={[]} // Necesitaremos cargar clientes
-              onCrearVolado={() => {}}
             />
           )}
         </div>
