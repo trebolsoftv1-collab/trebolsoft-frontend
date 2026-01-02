@@ -37,10 +37,10 @@ export default defineConfig({
     port: 3000,
     // Proxy para redirigir las llamadas /api al backend en desarrollo
     proxy: {
-      '/api': {
+      '/api/v1': {
         target: 'http://localhost:10000', // El puerto del backend V1
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '') // Opcional: si el backend no espera /api
+        rewrite: (path) => path.replace(/^\/api\/v1/, '/api/v1')
       }
     }
   }

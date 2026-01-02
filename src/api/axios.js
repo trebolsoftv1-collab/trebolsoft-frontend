@@ -1,10 +1,10 @@
 // sync-forced-2025
 import axios from 'axios';
 
-// La URL base ahora apunta a una ruta relativa.
-// En desarrollo, el proxy de Vite lo interceptará y redirigirá a http://localhost:10000/api
-// En producción, el servidor web (Nginx) lo redirigirá a https://api.trebolsoft.com
-const API_URL = '/api';
+// La URL base ahora apunta a la ruta correcta con el versionado de la API.
+// En desarrollo, el proxy de Vite lo interceptará.
+// En producción, el servidor web (Nginx) lo redirigirá.
+const API_URL = '/api/v1';
 
 // Crear instancia de axios con configuración base
 const api = axios.create({

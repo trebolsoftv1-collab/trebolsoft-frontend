@@ -6,7 +6,7 @@ export const login = async (username, password) => {
   formData.append('username', username);
   formData.append('password', password);
   
-  const response = await api.post('/api/v1/auth/token', formData, {
+  const response = await api.post('/auth/token', formData, {
     headers: {
       'Content-Type': undefined, // Deja que el navegador establezca el Content-Type con boundary
     },
@@ -15,6 +15,6 @@ export const login = async (username, password) => {
 };
 
 export const getCurrentUser = async () => {
-  const response = await api.get('/api/v1/auth/me');
+  const response = await api.get('/auth/me');
   return response.data;
 };
