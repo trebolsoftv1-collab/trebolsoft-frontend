@@ -1,32 +1,24 @@
 import api from '../axios';
 
-// --- MOVIMIENTOS GENERALES DE CAJA ---
-
-/**
- * Obtiene el saldo actual de la caja para el usuario logueado.
- */
-export const getSaldo = async () => {
-  const { data } = await api.get('/caja/saldo');
+// Obtiene la caja del usuario actual
+export const getSaldo = async (userId) => {
+  const { data } = await api.get(`/box/${userId}`);
+  // El saldo está en data.saldo o data.base_balance según el modelo
   return data;
 };
 
-/**
- * Obtiene una lista de movimientos de caja, con filtros opcionales.
- * @param {object} filters - Opcional. Objeto con filtros como { userId, tipo, fechaInicio, fechaFin }.
- */
-export const getMovimientos = async (filters = {}) => {
-  const params = new URLSearchParams(filters).toString();
-  const { data } = await api.get(`/caja/movimientos?${params}`);
+// Obtiene los movimientos de la caja del usuario actual
+export const getMovimientos = async (userId, params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  const { data } = await api.get(`/box/${userId}/history${query ? `?${query}` : ''}`);
   return data;
 };
 
-/**
- * Crea un nuevo movimiento de caja (transferencia, gasto, retiro, etc.).
- * @param {object} movimientoData - Datos del movimiento a crear.
- */
+// Crea un nuevo movimiento de caja (debería adaptarse según el backend)
 export const createMovimiento = async (movimientoData) => {
-  const { data } = await api.post('/caja/movimientos', movimientoData);
-  return data;
+  // Aquí deberías adaptar el endpoint según la API real
+  // Por ahora, solo lanza un error para evitar llamadas incorrectas
+  throw new Error('Endpoint de creación de movimiento no implementado. Usa el endpoint correcto según la API.');
 };
 
 

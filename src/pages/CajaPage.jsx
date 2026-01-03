@@ -96,15 +96,12 @@ const CajaPage = () => {
             />
           )}
 
+
           {activeTab === 'transacciones' && (
             <div>
-              <CajaPanel 
-                saldo={saldo} 
-                onAction={handleCrearMovimiento} 
-                usuarios={[]} // Necesitaremos cargar la lista de usuarios aquí
-              />
-              <hr className="my-6" />
-              <CajaMovimientos movimientos={movimientos} />
+              {/* Si quieres mostrar un panel de caja, pásale los datos correctos */}
+              {/* <CajaPanel caja={{ saldo }} movimientos={movimientos} onRetiro={() => {}} onTransferencia={() => {}} onCierre={() => {}} /> */}
+              <CajaMovimientos movimientos={movimientos || []} />
             </div>
           )}
 

@@ -1,5 +1,7 @@
 import { create } from 'zustand';
+
 import * as cajaAPI from '../api/endpoints/caja';
+import useAuthStore from './authStore';
 
 const useCajaStore = create((set, get) => ({
   // --- ESTADO (DATOS) ---
@@ -15,11 +17,15 @@ const useCajaStore = create((set, get) => ({
   /**
    * Carga el saldo inicial del usuario.
    */
+
   fetchSaldo: async () => {
     try {
       set({ loading: true, error: null });
-      const saldoData = await cajaAPI.getSaldo();
-      set({ saldo: saldoData.saldo, loading: false });
+      const user = useAuthStore.getState().user;
+      if (!user) throw new Error('Usuario no autenticado');
+      const saldoData = await cajaAPI.getSaldo(user.id);
+      // El saldo puede estar en saldoData.saldo o saldoData.base_balance
+      set({ saldo: saldoData.saldo ?? saldoData.base_balance ?? 0, loading: false });
     } catch (error) {
       set({ error: 'Error al cargar el saldo', loading: false });
       console.error(error);
@@ -30,10 +36,13 @@ const useCajaStore = create((set, get) => ({
    * Carga la lista de movimientos de caja.
    * @param {object} filters - Filtros para la búsqueda de movimientos.
    */
-  fetchMovimientos: async (filters) => {
+
+  fetchMovimientos: async (filters = {}) => {
     try {
       set({ loading: true, error: null });
-      const movimientosData = await cajaAPI.getMovimientos(filters);
+      const user = useAuthStore.getState().user;
+      if (!user) throw new Error('Usuario no autenticado');
+      const movimientosData = await cajaAPI.getMovimientos(user.id, filters);
       set({ movimientos: movimientosData, loading: false });
     } catch (error) {
       set({ error: 'Error al cargar los movimientos', loading: false });
