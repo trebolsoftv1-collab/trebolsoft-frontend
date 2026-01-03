@@ -16,7 +16,7 @@ export default function Dashboard() {
         // Obtener fecha de hoy en formato YYYY-MM-DD
         const today = new Date().toISOString().split('T')[0];
         // Consultar API filtrando por hoy para ver lo recaudado
-        const { data } = await api.get(`/api/v1/stats/?start_date=${today}&end_date=${today}`);
+        const { data } = await api.get(`/stats/?start_date=${today}&end_date=${today}`);
         setStats({
           moneyToday: data.monto_total || 0,
           pending: data.total_pendientes || 0
