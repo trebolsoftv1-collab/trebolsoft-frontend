@@ -249,7 +249,7 @@ const UserForm = () => {
             </div>
 
             {/* Supervisor (solo para cobradores) */}
-            {formData.role === 'collector' && (
+            {formData.role === 'COLLECTOR' && (
               <div>
                 <label htmlFor="supervisor_id" className="block text-sm font-medium text-gray-700">
                   Supervisor Asignado *
