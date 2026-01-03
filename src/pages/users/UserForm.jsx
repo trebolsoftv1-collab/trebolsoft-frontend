@@ -224,9 +224,9 @@ const UserForm = () => {
                   required
                   className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
-                  <option value="collector">Cobrador</option>
-                  <option value="supervisor">Supervisor</option>
-                  <option value="admin">Administrador</option>
+                  <option value="COLLECTOR">Cobrador</option>
+                  <option value="SUPERVISOR">Supervisor</option>
+                  <option value="ADMIN">Administrador</option>
                 </select>
               </div>
 

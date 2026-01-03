@@ -158,45 +158,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="mt-8 bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">
-            Panel de {roleLabels[user?.role]}
-          </h3>
-          {user?.role === "ADMIN" && (
-            <div className="text-gray-600">
-              <p className="mb-2">Como administrador tienes acceso completo al sistema:</p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>✅ Gestión completa de usuarios (crear supervisores y cobradores)</li>
-                <li>✅ Gestión de clientes y asignación por zonas</li>
-                <li>✅ Reportes y estadísticas generales</li>
-                <li>✅ Configuración del sistema</li>
-                <li>✅ Ver toda la información sin restricciones</li>
-              </ul>
-            </div>
-          )}
-          {user?.role === "SUPERVISOR" && (
-            <div className="text-gray-600">
-              <p className="mb-2">Como supervisor puedes:</p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>✅ Gestionar clientes de tu zona asignada</li>
-                <li>✅ Ver y supervisar a tus cobradores asignados</li>
-                <li>✅ Reportes de tu equipo y zona</li>
-                <li>❌ No puedes ver información de otros supervisores</li>
-              </ul>
-            </div>
-          )}
-          {user?.role === "COLLECTOR" && (
-            <div className="text-gray-600">
-              <p className="mb-2">Como cobrador puedes:</p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>✅ Ver tus clientes asignados únicamente</li>
-                <li>✅ Registrar pagos y actualizar estados</li>
-                <li>✅ Ver tu historial de cobranzas</li>
-                <li>❌ No puedes ver clientes de otros cobradores</li>
-              </ul>
-            </div>
-          )}
-        </div>
+
       </main>
     </div>
   );
