@@ -4,18 +4,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const UserCreated = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const user = location.state?.user;
 
+  // Si no hay datos, mostrar fallback y sugerir recargar la lista
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
-          <h2 className="text-2xl font-bold mb-2 text-gray-900">No hay datos de usuario</h2>
+          <h2 className="text-2xl font-bold mb-2 text-gray-900">Usuario creado correctamente</h2>
+          <p className="mb-4 text-gray-700">No se pudo mostrar el resumen, pero el usuario fue creado. Puedes volver a la lista y verificar los datos.</p>
           <button
             className="px-4 py-2 bg-blue-600 text-white rounded-md font-medium mt-4"
             onClick={() => navigate('/users')}
           >
-            Volver a la lista
+            Volver a la lista de usuarios
           </button>
         </div>
       </div>
