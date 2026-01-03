@@ -1,3 +1,13 @@
+import UserCreated from './pages/users/UserCreated';
+        {/* Resumen de usuario creado - Solo Admin */}
+        <Route
+          path="/users/created"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <UserCreated />
+            </ProtectedRoute>
+          }
+        />
 // sync-forced-2025
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';

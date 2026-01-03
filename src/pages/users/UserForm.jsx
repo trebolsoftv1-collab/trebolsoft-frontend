@@ -117,16 +117,16 @@ const UserForm = () => {
 
       if (!isEditing) {
         userData.password = formData.password;
-        await createUser(userData);
+        const createdUser = await createUser(userData);
+        navigate('/users/created', { state: { user: createdUser } });
       } else {
         // Si está editando y hay contraseña nueva, incluirla
         if (formData.password) {
           userData.password = formData.password;
         }
         await updateUser(id, userData);
+        navigate('/users');
       }
-      
-      navigate('/users');
     } catch (err) {
       setError(err.response?.data?.detail || 'Error al guardar el usuario');
       console.error('Error saving user:', err);
